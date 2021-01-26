@@ -1,0 +1,35 @@
+body {
+    font: 14px "Century Gothic", Futura, sans-serif;
+    margin: 20px;
+}
+
+
+.off-button {
+    background: black;
+    border: 1px solid #999;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;  
+    line-height: 34px;
+    height: 30px;
+    margin-right: -1px;  
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 30px;
+}
+
+.on-button {
+    background: whitesmoke ;
+    border: 1px solid #999;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;  
+    line-height: 34px;
+    height: 30px;
+    margin-right: -1px;  
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 30px;
+}

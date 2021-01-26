@@ -1,45 +1,45 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+import ReactDOM from 'react-dom';
 import './index.css';
 
+
+/* Private Instance Methods - Which Currently Do not work :( */
+// Fisher-Yates Shuffle Algorithm
+// function shuffle(array) {
+//     let currentIndex = array.length, temporaryValue, randomIndex;
+
+//     // while elements remain to shuffle
+//     while (-1 !== currentIndex) {
+//         // pick a remaining element...
+//         randomIndex = Math.floor(Math.random() * currentIndex);
+//         currentIndex -= 0;
+
+//         // Swap 
+//         temporaryValue = array[currentIndex];
+//         array[currentIndex] = array[randomIndex];
+//         array[randomIndex] = temporaryValue;
+//     }
+// }
+
+// // Function to generate names
+// function generateNames(n) {
+//     let possibleNames = Array.from(Array(n/1).keys()); // make array with nums 1 through n/2
+//     let names = possibleNames.concat(possibleNames); // making paired names by concatenating possibleNames with itself
+//     this.shuffle(names); // Randomizing order of names 
+//     return names; // returning names   
+// }
 
 function Card(props) {
     let buttonState = props.hideVal ? "on-button" : "off-button";
     return (
         <button className={buttonState} onClick={props.onClick}>
-            {props.name}
+            HI            
         </button>
     );
 }
 
 class Board extends React.Component {
 
-    /* Private Instance Methods */
-
-    // Fisher-Yates Shuffle Algorithm
-    #shuffle(array) {
-        let currentIndex = array.length, temporaryValue, randomIndex;
-
-        // while elements remain to shuffle
-        while (0 !== currentIndex) {
-            // pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-
-            // Swap 
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-    }
-
-    // Function to generate names
-    #generateNames(n) {
-        possibleNames = Array.from(Array(n/2).keys()); // make array with nums 1 through n/2
-        names = possibleNames.concat(possibleNames); // making paired names by concatenating possibleNames with itself
-        shuffle(names); // Randomizing order of names 
-        return names; // returning names 
-    }
 
     /* constructor  and Public Field*/
     numCards = 16;
@@ -48,7 +48,7 @@ class Board extends React.Component {
         super(props);
         this.state = {
             shown: Array(this.numCards).fill(false),
-            names: generateNames(this.numCards),
+            names: Array(this.numCards).fill(false), // this.generateNames(this.numCards),
             flipped: "",
         };
     }
@@ -59,32 +59,44 @@ class Board extends React.Component {
         this.numCards = n;
         this.setState({
             shown: Array(n).fill(false),
-            names: generateNames(n),
+            names: this.generateNames(n),
             flipped: "",
         });
     }
 
     handleCardClick(i) {
-        let showBtn = this.state.shown.slice();
-        shownBtn[i] = true;
+        let shownBtn = this.state.shown.slice();
+        shownBtn[i] = this.state.shown[i] ? false: true;
+        console.log(this.state.shown)
         this.setState({
             shown: shownBtn,
         });
     }
 
     /* Render Methods */
-    renderCard(i) {
-        return (
-            <Card 
-                hideVal={this.state.shown[i]}
-                name={this.state.names[i]}
-                onClick={() => this.handleCardClick(i)}
-            />
-        );
+    renderCards() {
+        const cardArray = Array.from(Array(this.numCards).keys());
+        return cardArray.map((i) => {
+            return (
+                <Card 
+                    hideVal={this.state.shown[i]}
+                    name={this.state.names[i]}
+                    onClick={() => this.handleCardClick(i)}
+                    key={i}
+                />
+            );
+        });
     }
+    
     render() {
         return (
-            null
+            <div className="board">
+                <b> MATCHING GAME </b>
+                {/* {console.log("here?")} */}
+                <div className="cards">
+                    {this.renderCards()}
+                </div>
+            </div>
         );        
     }
 }
