@@ -52,7 +52,16 @@ class Board extends React.Component {
         this.state = {
             shown: Array(this.numCards).fill(false),
             names: generateNames(this.numCards), 
-            flipped: "",
+            cardOne: {
+                name: "",
+                index: -1,
+            },
+            cardTwo: {
+                name: "",
+                index: -1,
+            },
+            count: 0,
+            
         };
     }
 
@@ -69,10 +78,51 @@ class Board extends React.Component {
 
     handleCardClick(i) {
         let shownBtn = this.state.shown.slice();
+        const ct = this.state.count + 1;
         shownBtn[i] = this.state.shown[i] ? false: true;
-        console.log(this.state.names[i])
+
+        
+        if (this.state.count % 2 === 0 ) {
+            console.log('HI')
+            console.log(this.state.count)
+            if (!(this.state.cardOne.name === this.state.cardTwo.name)) {
+                console.log(this.state.cardOne, this.state.cardTwo)
+                this.setState({
+                    shown: Array(this.numCards).fill(false),
+                    count: 0,
+                    cardOne: {
+                        name: "",
+                        index: -1,
+                    },
+                    cardTwo: {
+                        name: "",
+                        index: -1,
+                    },
+                });
+                
+            } 
+            
+            this.setState({
+                shown: shownBtn,
+                cardOne: {
+                    name: `${this.state.names[i]}`,
+                    index: i,
+                },
+            })
+
+        } else if (this.state.count % 2 === 1) { 
+            this.setState({
+                shown: shownBtn,
+                cardTwo: {
+                    name: `${this.state.names[i]}`,
+                    index: i,
+                },
+            })
+        }
+
         this.setState({
-            shown: shownBtn,
+            // shown: shownBtn,
+            count: ct, 
         });
     }
 
